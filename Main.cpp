@@ -13,6 +13,7 @@ void readDouble(string prompt, double &num);
 void readString(string prompt);
 void readChar(string prompt, char &letter);
 double tipDiscount(double &tip, double &discount, double cost);
+void resetValues(char &add, double &cost, double &tipAmount, double &discountAmount, double &sub, double &grand);
 
 int main(){
     int menuOption;
@@ -43,6 +44,8 @@ int main(){
                 grandTotal = tipDiscount(tip, discount, subTotal);
                 cout << "Your discount is: $ " << discount << endl;
                 cout << "Your final total is: $" << grandTotal << endl;
+                resetValues(addItem, itemCost, tip, discount, subTotal, grandTotal);
+
                 break;
             case 2:
                 cout << "See you next time!\n";
@@ -138,3 +141,13 @@ void readChar(string prompt, char &letter){
     cin >> letter;
     letter = tolower(letter);
 }
+
+void resetValues(char &add, double &cost, double &tipAmount, double &discountAmount, double &sub, double &grand){
+    add = 'y';
+    cost = 0;
+    tipAmount = 0;
+    discountAmount = 0;
+    sub = 0; 
+    grand = 0;
+}
+
