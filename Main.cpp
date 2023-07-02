@@ -1,5 +1,6 @@
 #include <iostream>
 #include <limits>
+#include <cctype>
 
 using namespace std;
 
@@ -10,11 +11,12 @@ void placeOrder(double &cost);
 void readInt(string prompt, int &num);
 void readDouble(string prompt, double &num);
 void readString(string prompt);
+void readChar(string prompt, char &letter);
 double tipDiscount(double &tip, double &discount, double cost);
 
 int main(){
     int menuOption;
-    char addItem = 'n';
+    char addItem = 'y';
     double itemCost,
            tip,
            discount,
@@ -22,34 +24,24 @@ int main(){
            grandTotal;
 
     welcome();
-    displayMenu();
     while(true){
+        tip = 0;
+        discount = 0;
+        subTotal = 0;
+        grandTotal = 0;
+        displayMenu();
         readOption(menuOption);
         switch(menuOption){
             case 1:
-                while(true){
+                while(addItem != 'n'){
                     placeOrder(itemCost);
                     subTotal += itemCost;
                     cout << subTotal << endl;
-                    cout << "Do you want another item? ( y / n ): ";
-                    cin >> addItem;
-                    switch (addItem){
-                        case 'y':
-                        case 'Y':
-                            break;
-                        case 'n':
-                        case 'N':
-                            return 0;
-                        default:
-                            cout << "You have chosen poorly. Please try again.\n";
-                            cin.clear();
-                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                            break;
-                    }
+                    readChar("Do you want another item? ( y / n ): ", addItem);
                 }
                 cout << "Your total is: " << subTotal << endl;
                 grandTotal = tipDiscount(tip, discount, subTotal);
-                cout << "Your discount is " << discount << endl;
+                cout << "Your discount is: $ " << discount << endl;
                 cout << "Your final total is: $" << grandTotal << endl;
                 break;
             case 2:
@@ -61,10 +53,8 @@ int main(){
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 break;
         }
-
     }
     
-    system("pause");
     return 0;
 }
 
@@ -141,4 +131,10 @@ double tipDiscount(double &tip, double &discount, double cost){
     }
 
     return cost - discount;
+}
+
+void readChar(string prompt, char &letter){
+    cout << prompt;
+    cin >> letter;
+    letter = tolower(letter);
 }
